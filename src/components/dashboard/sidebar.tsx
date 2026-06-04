@@ -23,6 +23,12 @@ export function DashboardSidebar({ title, links }: SidebarProps) {
           </Link>
         ))}
       </nav>
+      <Link
+        href="/"
+        className="mt-auto text-sm text-[var(--color-foreground)]/70 transition hover:text-[var(--color-accent)]"
+      >
+        ← Back to shop
+      </Link>
     </aside>
   );
 }

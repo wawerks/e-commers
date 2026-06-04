@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { Button } from "@/components/ui/button";
@@ -53,8 +54,12 @@ export default function Home() {
               MarketDock blends premium shopping with operational clarity.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button>Start selling</Button>
-              <Button variant="ghost">Explore the market</Button>
+              <Link href="/register">
+                <Button>Start selling</Button>
+              </Link>
+              <Link href="/#sellers">
+                <Button variant="ghost">Explore the market</Button>
+              </Link>
             </div>
             <div className="flex flex-wrap gap-6 text-sm text-[var(--color-foreground)]/70">
               {metrics.map((metric) => (
@@ -148,8 +153,12 @@ export default function Home() {
               tailored dashboards for inventory, payouts, and performance.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Button variant="ghost">Admin dashboard</Button>
-              <Button variant="secondary">Seller tools</Button>
+              <Link href="/admin">
+                <Button variant="ghost">Admin dashboard</Button>
+              </Link>
+              <Link href="/seller">
+                <Button variant="secondary">Seller tools</Button>
+              </Link>
             </div>
           </Card>
           <Card className="space-y-4">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Space_Grotesk } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { AuthSessionProvider } from "@/components/providers/session-provider";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -31,7 +32,7 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-[var(--color-background)] text-[var(--color-foreground)]">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          {children}
+          <AuthSessionProvider>{children}</AuthSessionProvider>
         </ThemeProvider>
       </body>
     </html>

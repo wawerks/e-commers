@@ -17,7 +17,9 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   if (!token) {
-    return NextResponse.redirect(new URL("/login", nextUrl));
+    const loginUrl = new URL("/login", nextUrl);
+    loginUrl.searchParams.set("callbackUrl", path);
+    return NextResponse.redirect(loginUrl);
   }
 
   if (path.startsWith("/admin") && token.role !== ADMIN_ROLE) {
