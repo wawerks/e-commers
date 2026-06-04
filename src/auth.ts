@@ -1,12 +1,12 @@
-import "server-only";
-import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import type { NextAuthOptions } from "next-auth";
+import { getServerSession } from "next-auth/next";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import { loginSchema } from "@/lib/validators/auth";
 import { verifyPassword } from "@/lib/password";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: "jwt" },
@@ -14,7 +14,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/login",
   },
   providers: [
-    Credentials({
+    CredentialsProvider({
+      name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
@@ -38,7 +39,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null;
         }
 
-        return user;
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          sellerStatus: user.sellerStatus,
+        };
       },
     }),
   ],
@@ -60,4 +67,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
   },
-});
+};
+
+export async function auth() {
+  return getServerSession(authOptions);
+}
