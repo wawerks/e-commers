@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MarketDock
 
-## Getting Started
+Multi-vendor e-commerce platform built with Next.js App Router, Prisma, MySQL, and Auth.js.
 
-First, run the development server:
+## Stack
+
+- Next.js App Router + TypeScript
+- Prisma ORM (MySQL)
+- Auth.js (NextAuth) with credentials provider
+- Tailwind CSS v4
+- Stripe (Payment Intents)
+
+## Environment
+
+Create a `.env` file in the project root:
+
+```env
+DATABASE_URL="mysql://root:password@localhost:3306/e-commers"
+NEXTAUTH_SECRET="replace-with-a-strong-secret"
+NEXTAUTH_URL="http://localhost:3000"
+STRIPE_SECRET_KEY="sk_test_replace"
+```
+
+## Install
+
+```bash
+npm install
+```
+
+## Prisma
+
+```bash
+npx prisma generate
+npx prisma migrate dev --name init
+```
+
+## Run
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Role-based routes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `/admin/*` -> Admin only
+- `/seller/*` -> Seller only (approved)
+- `/profile/*` -> Authenticated users
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Notes
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Middleware validates JWT tokens only and remains Edge-compatible.
+- Prisma client is initialized server-side using a singleton pattern.
+# e-commers
